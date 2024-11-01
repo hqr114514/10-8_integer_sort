@@ -1,4 +1,4 @@
-﻿#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 FILE* f;
@@ -23,7 +23,7 @@ inline long long calc10(int x) {
 	if (x == 0) return 1;
 	if (x == 1) return 10;
 	register long long ans[12] = { 1,10 };
-	for (register int i = 2; i <= x; i++) {
+	for (register int i = 2; i ^ (-(~x)); i = -(~i)) {
 		ans[i] = ans[i >> 1];
 		ans[i] *= ans[i];
 		if (i & 1) ans[i] = (ans[i] << 3) + (ans[i] << 1);
@@ -38,20 +38,21 @@ int main() {
 	delete[]file_path;
 	a = new int[n + 1];
 	tmp = new int[n + 1];
-	for (register int i = 1; i <= n; i++) *(a + i) = read();
+	for (register int i = 1; i ^ (-(~n)); i = -(~i)) *(a + i) = read();
 	fclose(f);
-	for (register int i = 0; i < 10; i++) {
+	for (register int i = 0; i ^ 10; i = -(~i)) {
 		register long long r = calc10(i);
 		register int cnt[10] = { 0 };
 		memset(tmp, 0, sizeof(tmp));
-		for (register int j = 1; j <= n; j++) cnt[(a[j] / r) % 10]++;
-		for (register int j = 1; j < 10; j++) cnt[j] += cnt[j - 1];
-		for (register int j = n; j >= 1; j--) tmp[cnt[(a[j] / r) % 10]--] = a[j];
-		for (register int j = 1; j <= n; j++) a[j] = tmp[j];
+		for (register int j = 1; j ^ (-(~n)); j = -(~j)) cnt[(a[j] / r) % 10]++;
+		for (register int j = 1; j ^ 10; j = -(~j)) cnt[j] += cnt[j - 1];
+		for (register int j = n; j ^ 0; j = ~(-j)) tmp[cnt[(a[j] / r) % 10]--] = a[j];
+		memcpy(a, tmp, (-(~n)) << 2);
 	}
 	delete[]tmp;
 	ofstream fout("sort.txt");
-	for (register int i = 1; i <= n; i++) fout << a[i] << endl;
+	for (register int i = 1; i ^ (-(~n)); i = -(~i)) fout << a[i] << endl;
+	fout.close();
 	delete[]a;
 	return 0;
 }
